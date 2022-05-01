@@ -2,6 +2,7 @@ package com.tobetteryou.tobetterdo.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -22,19 +23,18 @@ public class DetailToDoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        tasarim = FragmentDetailToDoBinding.inflate(inflater, container, false);
+        //DataBinding
+        tasarim = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_to_do, container, false);
+        //Authorization of layout object
+        tasarim.setDetailToDoFragmentObject(this);
 
-        tasarim.toolbarDetailToDo.setTitle("Detail To Do");
+        //Toolbar name
+        tasarim.setDetailToDoToolbarName("Detail To Doo");
 
+        //Get event object from MainPage fragment and Set it to the updomingEvent variable in layout
         DetailToDoFragmentArgs bundle = DetailToDoFragmentArgs.fromBundle(getArguments());
         Event upcoming_event = bundle.getEvent();
-
-        tasarim.editTextAddToDo.setText(upcoming_event.getEvent_name());
-
-        tasarim.buttonUpdateToDo.setOnClickListener(view -> {
-            String event_name = tasarim.editTextAddToDo.getText().toString();
-            update(upcoming_event.getEvent_id(),event_name);
-        });
+        tasarim.setUpcomingEvent(upcoming_event);
 
 
         return  tasarim.getRoot();

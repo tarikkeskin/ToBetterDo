@@ -2,6 +2,7 @@ package com.tobetteryou.tobetterdo.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -16,18 +17,18 @@ import com.tobetteryou.tobetterdo.databinding.FragmentAddToDoBinding;
 public class AddToDoFragment extends Fragment {
 
     private FragmentAddToDoBinding tasarim;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        tasarim = FragmentAddToDoBinding.inflate(inflater, container, false);
+        //Data binding
+        tasarim = DataBindingUtil.inflate(inflater,R.layout.fragment_add_to_do,container,false);
+        //Authorization fragment object to call methods
+        tasarim.setAddToDoFragmentObject(this);
 
-        tasarim.toolbarAddToDo.setTitle("Add Event");
-
-        tasarim.buttonAdd.setOnClickListener(view -> {
-            String event_name = tasarim.editTextAddToDo.getText().toString();
-            add(event_name);
-        });
+        // set toolbar name with data binding
+        tasarim.setAddToDoToolbarName("Add To Do");
 
         return tasarim.getRoot();
     }
