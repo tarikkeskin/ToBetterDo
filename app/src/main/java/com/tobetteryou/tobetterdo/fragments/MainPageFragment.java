@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tobetteryou.tobetterdo.R;
+import com.tobetteryou.tobetterdo.adapter.EventAdapter;
 import com.tobetteryou.tobetterdo.databinding.FragmentMainPageBinding;
+import com.tobetteryou.tobetterdo.entity.Event;
+
+import java.util.ArrayList;
 
 public class MainPageFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -35,11 +40,22 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
         //support out toolbar as action bar
         ((AppCompatActivity)getActivity()).setSupportActionBar(tasarim.toolbarMainPage);
 
+        tasarim.rv.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        ArrayList<Event> events = new ArrayList<>();
+        Event e1 = new Event(1,"Brush teeth");
+        Event e2 = new Event(2,"Develop Project");
+        Event e3 = new Event(3,"Go Walk");
+        events.add(e1);
+        events.add(e2);
+        events.add(e3);
+
+        EventAdapter eventAdapter = new EventAdapter(requireContext(),events);
+        tasarim.rv.setAdapter(eventAdapter);
+
         tasarim.fab.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.addToDoNavigation);
         });
-
-
 
         return tasarim.getRoot();
     }
