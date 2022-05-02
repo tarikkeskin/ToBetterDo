@@ -48,18 +48,10 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
         //support out toolbar as action bar
         ((AppCompatActivity)getActivity()).setSupportActionBar(tasarim.toolbarMainPage);
 
-
-        ArrayList<Event> events = new ArrayList<>();
-        Event e1 = new Event(1,"Brush teeth");
-        Event e2 = new Event(2,"Develop Project");
-        Event e3 = new Event(3,"Go Walk");
-        events.add(e1);
-        events.add(e2);
-        events.add(e3);
-
-        EventAdapter eventAdapter = new EventAdapter(requireContext(),events);
-        tasarim.setEventAdapter(eventAdapter);
-
+        viewModel.eventList.observe(getViewLifecycleOwner(),liste->{
+            EventAdapter eventAdapter = new EventAdapter(requireContext(),liste,viewModel);
+            tasarim.setEventAdapter(eventAdapter);
+        });
 
         return tasarim.getRoot();
     }

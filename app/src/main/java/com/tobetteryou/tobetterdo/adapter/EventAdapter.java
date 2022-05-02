@@ -16,16 +16,19 @@ import com.tobetteryou.tobetterdo.R;
 import com.tobetteryou.tobetterdo.databinding.CardEventBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
 import com.tobetteryou.tobetterdo.fragments.MainPageFragmentDirections;
+import com.tobetteryou.tobetterdo.viewmodels.MainPageFragmentViewModel;
 
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardDesignAttachment> {
     private Context mContext;
     private List<Event> eventArrayList;
+    private MainPageFragmentViewModel viewModel;
 
-    public EventAdapter(Context mContext, List<Event> eventArrayList) {
+    public EventAdapter(Context mContext, List<Event> eventArrayList, MainPageFragmentViewModel viewModel) {
         this.mContext = mContext;
         this.eventArrayList = eventArrayList;
+        this.viewModel = viewModel;
     }
 
     public class CardDesignAttachment extends RecyclerView.ViewHolder{
@@ -63,7 +66,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardDesignAt
         t.imageViewDeleteIcon.setOnClickListener(view -> {
             Snackbar.make(view,"You wanna delete "+event.getEvent_name()+" ?",Snackbar.LENGTH_LONG)
                     .setAction("Yes",view1 -> {
-                        Log.e("Event Delete",String.valueOf(event.getEvent_id()));
+                        viewModel.delete(event.getEvent_id());
                     })
                     .show();
 
