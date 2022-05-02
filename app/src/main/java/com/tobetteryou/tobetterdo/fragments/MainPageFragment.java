@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -23,6 +24,7 @@ import com.tobetteryou.tobetterdo.R;
 import com.tobetteryou.tobetterdo.adapter.EventAdapter;
 import com.tobetteryou.tobetterdo.databinding.FragmentMainPageBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
+import com.tobetteryou.tobetterdo.viewmodels.MainPageFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -30,6 +32,7 @@ import java.util.Vector;
 public class MainPageFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private FragmentMainPageBinding tasarim;
+    private MainPageFragmentViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +72,7 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        viewModel = new ViewModelProvider(this).get(MainPageFragmentViewModel.class);
     }
 
     @Override
@@ -84,17 +88,14 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        search(query);
+        viewModel.search(query);
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        search(newText);
+        viewModel.search(newText);
         return true;
     }
 
-    public void search(String searchText){
-        Log.e("Event",searchText);
-    }
 }

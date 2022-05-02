@@ -2,8 +2,10 @@ package com.tobetteryou.tobetterdo.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,11 +16,14 @@ import com.tobetteryou.tobetterdo.R;
 import com.tobetteryou.tobetterdo.adapter.EventAdapter;
 import com.tobetteryou.tobetterdo.databinding.FragmentDetailToDoBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
+import com.tobetteryou.tobetterdo.viewmodels.DetailToDoFragmentViewModel;
 
 
 public class DetailToDoFragment extends Fragment {
 
     private FragmentDetailToDoBinding tasarim;
+    private DetailToDoFragmentViewModel viewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,7 +45,13 @@ public class DetailToDoFragment extends Fragment {
         return  tasarim.getRoot();
     }
 
-    public void update(int event_id,String event_name){
-        Log.e("Event",event_name);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(DetailToDoFragmentViewModel.class);
+    }
+
+    public void buttonUpdate(int event_id, String event_name){
+        viewModel.update(event_id,event_name);
     }
 }
