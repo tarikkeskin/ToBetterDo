@@ -25,6 +25,7 @@ import com.tobetteryou.tobetterdo.adapter.EventAdapter;
 import com.tobetteryou.tobetterdo.databinding.FragmentMainPageBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
 import com.tobetteryou.tobetterdo.viewmodels.MainPageFragmentViewModel;
+import com.tobetteryou.tobetterdo.viewmodels.MainPageVMF;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -64,7 +65,9 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        viewModel = new ViewModelProvider(this).get(MainPageFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this,
+                new MainPageVMF(requireActivity().getApplication()))
+                .get(MainPageFragmentViewModel.class);
     }
 
     @Override

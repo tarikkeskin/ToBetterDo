@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.tobetteryou.tobetterdo.R;
 import com.tobetteryou.tobetterdo.databinding.FragmentAddToDoBinding;
 import com.tobetteryou.tobetterdo.viewmodels.AddToDoFragmentViewModel;
+import com.tobetteryou.tobetterdo.viewmodels.AddToDoVMF;
 
 
 public class AddToDoFragment extends Fragment {
@@ -40,7 +41,9 @@ public class AddToDoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(AddToDoFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this,
+                new AddToDoVMF(requireActivity().getApplication()))
+                .get(AddToDoFragmentViewModel.class);
     }
     public void buttonAdd(String event_name){
         viewModel.add(event_name);

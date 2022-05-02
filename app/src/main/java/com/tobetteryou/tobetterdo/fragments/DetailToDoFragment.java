@@ -17,6 +17,7 @@ import com.tobetteryou.tobetterdo.adapter.EventAdapter;
 import com.tobetteryou.tobetterdo.databinding.FragmentDetailToDoBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
 import com.tobetteryou.tobetterdo.viewmodels.DetailToDoFragmentViewModel;
+import com.tobetteryou.tobetterdo.viewmodels.DetailToDoVMF;
 
 
 public class DetailToDoFragment extends Fragment {
@@ -48,7 +49,9 @@ public class DetailToDoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(DetailToDoFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this,
+                new DetailToDoVMF(requireActivity().getApplication()))
+                .get(DetailToDoFragmentViewModel.class);
     }
 
     public void buttonUpdate(int event_id, String event_name){

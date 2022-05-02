@@ -1,19 +1,26 @@
 package com.tobetteryou.tobetterdo.repository;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.tobetteryou.tobetterdo.entity.Event;
+import com.tobetteryou.tobetterdo.room.Database;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class EventDaoRepository {
     private MutableLiveData<List<Event>> eventList;
+    private Database db;
 
-    public EventDaoRepository() {
+    public EventDaoRepository(Application application) {
         eventList = new MutableLiveData<>();
+        db = Database.databaseConnection(application);
     }
 
     public MutableLiveData<List<Event>> getEventLiveData(){
@@ -37,14 +44,11 @@ public class EventDaoRepository {
     }
 
     public void getAllEvents(){
-        ArrayList<Event> list = new ArrayList<>();
-        Event e1 = new Event(1,"Brush teeth");
-        Event e2 = new Event(2,"Develop Project");
-        Event e3 = new Event(3,"Go Walk");
-        list.add(e1);
-        list.add(e2);
-        list.add(e3);
-        eventList.setValue(list);
-
+        Disposable disposable = db.eventsDao().allEvents()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    eventList.setValue(list);
+                });
     }
 }

@@ -1,9 +1,20 @@
 package com.tobetteryou.tobetterdo.entity;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "events")
 public class Event implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "event_id")
     private int event_id;
+    @ColumnInfo(name = "event_ad")
+    @NonNull
     private String event_name;
 
     public Event() {
