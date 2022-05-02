@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.tobetteryou.tobetterdo.databinding.FragmentMainPageBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class MainPageFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -33,14 +35,16 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        tasarim = FragmentMainPageBinding.inflate(inflater, container, false);
+        //DataBinding
+        tasarim = DataBindingUtil.inflate(inflater, R.layout.fragment_main_page,container, false);
+        //Authorization of layout object
+        tasarim.setMainPageFragmentObject(this);
 
-        tasarim.toolbarMainPage.setTitle("To Do List");
+        tasarim.setMainPageToolbarName("To Do List");
 
         //support out toolbar as action bar
         ((AppCompatActivity)getActivity()).setSupportActionBar(tasarim.toolbarMainPage);
 
-        tasarim.rv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         ArrayList<Event> events = new ArrayList<>();
         Event e1 = new Event(1,"Brush teeth");
@@ -51,13 +55,14 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
         events.add(e3);
 
         EventAdapter eventAdapter = new EventAdapter(requireContext(),events);
-        tasarim.rv.setAdapter(eventAdapter);
+        tasarim.setEventAdapter(eventAdapter);
 
-        tasarim.fab.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.addToDoNavigation);
-        });
 
         return tasarim.getRoot();
+    }
+
+    public void fabClick(View view){
+        Navigation.findNavController(view).navigate(R.id.addToDoNavigation);
     }
 
     @Override
