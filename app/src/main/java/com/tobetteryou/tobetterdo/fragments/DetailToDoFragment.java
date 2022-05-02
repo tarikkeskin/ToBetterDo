@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,7 +55,8 @@ public class DetailToDoFragment extends Fragment {
                 .get(DetailToDoFragmentViewModel.class);
     }
 
-    public void buttonUpdate(int event_id, String event_name){
+    public void buttonUpdate(int event_id, String event_name,View view){
         viewModel.update(event_id,event_name);
+        Navigation.findNavController(view).navigate(R.id.detailToDoToMainPage);
     }
 }

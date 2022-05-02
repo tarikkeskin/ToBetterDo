@@ -54,7 +54,7 @@
             android:layout_marginTop="100dp"
             android:layout_marginEnd="64dp"
             android:text="Update"
-            android:onClick="@{() -> detailToDoFragmentObject.buttonUpdate(upcomingEvent.getEvent_id(),editTextAddToDo.getText().toString())}"
+            android:onClick="@{() -> detailToDoFragmentObject.buttonUpdate(upcomingEvent.getEvent_id(),editTextAddToDo.getText().toString(),buttonUpdateToDo)}"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

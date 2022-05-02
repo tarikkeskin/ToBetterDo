@@ -25,10 +25,23 @@
         <argument
             android:name="event"
             app:argType="com.tobetteryou.tobetterdo.entity.Event" />
+        <action
+            android:id="@+id/detailToDoToMainPage"
+            app:destination="@id/mainPageFragment"
+            app:popUpTo="@id/mainPageFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
     <fragment
         android:id="@+id/addToDoFragment"
         android:name="com.tobetteryou.tobetterdo.fragments.AddToDoFragment"
         android:label="fragment_add_to_do"
-        tools:layout="@layout/fragment_add_to_do" />
+        tools:layout="@layout/fragment_add_to_do" >
+        <action
+            android:id="@+id/addToDoToMainPage"
+            app:destination="@id/mainPageFragment"
+            app:popUpTo="@id/mainPageFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 </navigation>
