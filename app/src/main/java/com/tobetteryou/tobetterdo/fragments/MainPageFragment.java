@@ -93,4 +93,9 @@ public class MainPageFragment extends Fragment implements SearchView.OnQueryText
         return true;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.uploadEvents();
+    }
 }
