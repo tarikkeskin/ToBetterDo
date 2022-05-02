@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.tobetteryou.tobetterdo.R;
 import com.tobetteryou.tobetterdo.databinding.CardEventBinding;
 import com.tobetteryou.tobetterdo.entity.Event;
 import com.tobetteryou.tobetterdo.fragments.MainPageFragmentDirections;
@@ -39,7 +41,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardDesignAt
     @Override
     public CardDesignAttachment onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        CardEventBinding tasarim = CardEventBinding.inflate(layoutInflater,parent,false);
+        //Card DataBinding
+        CardEventBinding tasarim = DataBindingUtil.inflate(layoutInflater, R.layout.card_event,parent,false);
         return new CardDesignAttachment(tasarim);
     }
 
@@ -48,8 +51,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CardDesignAt
         Event event = eventArrayList.get(position);
         CardEventBinding t = holder.tasarim;
 
-        t.textViewEvent.setText(event.getEvent_name());
+        t.setEventObject(event);
 
+        //Databinding do not support Card Event Handler
         t.cardEvent.setOnClickListener(view -> {
             MainPageFragmentDirections.DetailToDoNavigation gecis = MainPageFragmentDirections.detailToDoNavigation(event);
             Navigation.findNavController(view).navigate(gecis);
